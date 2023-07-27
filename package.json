@@ -1,0 +1,16 @@
+{
+  "name": "voyage_vibe",
+  "version": "1.0.0",
+  "description": "\"individual project for comp693\"",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "heather wang",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "mongoose": "^7.4.1"
+  }
+}
