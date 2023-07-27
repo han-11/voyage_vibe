@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
-const Destination = require('./models/destinations')
+const Journey = require('./models/journey')
 
 // connect to the database and create a new database
 mongoose.connect('mongodb://localhost:27017/voyage_vibe', {
@@ -19,18 +19,15 @@ const app = express();
 
 
 app.set('view engine', 'ejs');
-app.set('view', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, 'views'));
 
 app.get('/', (req, res) => {
-  res.render('home')
+  res.send("Hello World")
 })
 
-app.get('/newdestination', async (req, res) => {
-  const destination = new Destination({
-    title: 'new destination',
-   
-  })
-  await destination.save();
+app.get('/journeys', async (req, res) => {
+  const journeys = await Journey.find({})
+  res.render('journeys/index', { journeys })
 })
 
 app.listen(3000, () => {
