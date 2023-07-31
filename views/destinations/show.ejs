@@ -1,0 +1,60 @@
+<% layout('layouts/boilerplate') %>
+
+
+  <link rel="stylesheet" href="/styles/stars.css">
+
+
+
+  <div class="row">
+    <div class="col-6 ">
+
+      <div id="destinationCarousel" class="carousel slide">
+        <div class="carousel-inner">
+          <img src="<%=destination.image%>" class="d-block w-100" alt="...">
+        </div>
+
+        <button class="carousel-control-prev" type="button" data-bs-target="#destinationCarousel" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#destinationCarousel" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+
+      </div>
+
+
+      <div class="card mb-3">
+        <div class="card-body">
+          <h5 class="card-title">
+            <%= destination.title%>
+          </h5>
+          <p class="card-text">
+            <%= destination.description%>
+          </p>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item text-muted">
+            <%= destination.location%>
+          </li>
+
+          <li class="list-group-item">
+            <%= destination.date%>
+          </li>
+        </ul>
+
+        <div class="card-body">
+          <a class="card-link btn btn-info" href="/destinations/<%=destination._id%>/edit">Edit</a>
+          <form class="d-inline" action="/destinations/<%=destination._id%>?_method=DELETE" method="POST">
+            <button class="btn btn-danger">Delete</button>
+          </form>
+        </div>
+        <div class="card-footer text-muted">
+          2 days ago
+        </div>
+      </div>
+
+    </div>
+
+  </div>

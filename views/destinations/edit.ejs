@@ -1,0 +1,58 @@
+<% layout('layouts/boilerplate') %>
+
+
+  <div class="row">
+    <h1 class="text-center">Edit Destination</h1>
+    <div class="col-6 offset-3">
+      <form action="/destinations/<%=destination._id%>?_method=PUT" method="POST" class="validated-form" novalidate>
+        <div class="mb-3">
+          <label class="form-label" for="title">Title</label>
+          <input class="form-control" type="text" id="title" name="destination[title]" value="<%=destination.title %>"
+            required>
+          <div class="valid-feedback">
+            Looks good!
+          </div>
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="location">Location</label>
+          <input class="form-control" type="text" id="location" name="destination[location]"
+            value="<%=destination.location %>" required>
+          <div class="valid-feedback">
+            Looks good!
+          </div>
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="price">Travelling Date</label>
+          <div class="input-group">
+            <input class="form-control" type="date" id="date" name="destination[date]" value="<%=destination.date %>"
+              aria-describedby="date-label" required>
+            <div class="valid-feedback">
+              Looks good!
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="description">Description</label>
+          <textarea class="form-control" type="text" id="description" name="destination[description]"
+            required><%= destination.description%></textarea>
+          <div class="valid-feedback">
+            Looks good!
+          </div>
+        </div>
+        <div class="mt-3 custom-file">
+          <label for="" class="form-label ">Add more Images</label>
+          <input class="form-control" type="file" id="image" name="image" multiple>
+          <label for="image" class="form-label custom-file-label" name="image" id="image"></label>
+        </div>
+        <div class="mb-3">
+          <img src="<%=destination.image%>" alt="" style="width: 100px; height: 100px;">
+        </div>
+        <div class="mb-3">
+          <button class="btn btn-info">Update destination</button>
+        </div>
+      </form>
+      <a href="/destinations/<%= destination._id%>">Back To destination</a>
+
+    </div>
+  </div>
