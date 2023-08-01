@@ -5,8 +5,9 @@ const methodOverride = require('method-override');
 const ejsMate = require('ejs-mate');
 const catchAsync = require('./utils/catchAsync');
 const ExpressError = require('./utils/ExpressError');
-const { destinationSchema } = require('./schemas.js');
+const { destinationSchema, commentSchema } = require('./schemas.js');
 const Destination = require('./models/destination');
+const Comment = require('./models/comment');
 
 
 // connect to the database and create a new database
@@ -42,6 +43,16 @@ const validateDestination = (req, res, next) => {
   }
 }
 
+const validateComment = (req, res, next) => {
+  const { error } = commentSchema.validate(req.body);
+  if (error) {
+    const msg = result.error.details.map(el => el.message).join(',')
+    throw new ExpressError(msg, 400)
+  } else {
+    next();
+  }
+}
+
 
 app.get('/', (req, res) => {
   res.send("Hello World")
@@ -64,7 +75,7 @@ app.post('/destinations', validateDestination, catchAsync(async (req, res) => {
 }));
 
 app.get('/destinations/:id', catchAsync(async (req, res) => {
-  const destination = await Destination.findById(req.params.id);
+  const destination = await Destination.findById(req.params.id).populate('comments');
   res.render('destinations/show', { destination });
 }));
 
@@ -84,6 +95,22 @@ app.delete('/destinations/:id', catchAsync(async (req, res) => {
   const { id } = req.params;
   await Destination.findByIdAndDelete(id);
   res.redirect('/destinations')
+}));
+
+app.post('/destinations/:id/comments', validateComment, catchAsync(async (req, res) => {
+  const destination = await Destination.findById(req.params.id);
+  const comment = new Comment(req.body.comment);
+  destination.comments.push(comment);
+  await comment.save();
+  await destination.save();
+  res.redirect(`/destinations/${destination._id}`);
+}));
+
+app.delete('/destinations/:id/comments/:commentId', catchAsync(async (req, res) => {
+  const { id, commentId } = req.params;
+  await Destination.findByIdAndUpdate(id, { $pull: { comments: commentId } });
+  await Comment.findByIdAndDelete(commentId);
+  res.redirect(`/destinations/${id}`);
 }));
 
 // define a middleware to handle all the request that not match the route above

@@ -1,7 +1,7 @@
 const Joi = require('joi');
 
 
-const destinationSchema = Joi.object({
+module.exports.destinationSchema = Joi.object({
     destination: Joi.object({
       location: Joi.string().required(),
       title: Joi.string().required(),
@@ -12,5 +12,9 @@ const destinationSchema = Joi.object({
 
   
 
-
-module.exports = destinationSchema;
+module.exports.commentSchema = Joi.object({
+  comment: Joi.object({
+    body: Joi.string().required(),
+    rating: Joi.number().required().min(1).max(5)
+  }).required()
+});
