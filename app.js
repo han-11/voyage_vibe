@@ -3,12 +3,18 @@ const path = require('path');
 const mongoose = require('mongoose');
 const methodOverride = require('method-override');
 const ejsMate = require('ejs-mate');
+const session = require('express-session');
+const flash = require('connect-flash');
+const passport = require('passport');
+const LocalStrategy = require('passport-local');
 const catchAsync = require('./utils/catchAsync');
 const ExpressError = require('./utils/ExpressError');
-const { destinationSchema, commentSchema } = require('./schemas.js');
-const Destination = require('./models/destination');
-const Comment = require('./models/comment');
+const User = require('./models/user');
 
+// import the routes
+const destinationsRoutes = require('./routes/destinations');
+const commentsRoutes = require('./routes/comments');
+const userRoutes = require('./routes/users');
 
 // connect to the database and create a new database
 mongoose.connect('mongodb://localhost:27017/voyage_vibe', {
@@ -27,91 +33,62 @@ const app = express();
 
 app.engine('ejs', ejsMate);
 app.set('view engine', 'ejs');
+// set the path for the views folder
 app.set('views', path.join(__dirname, 'views'));
 // parse the form data and put it in the request body
 app.use(express.urlencoded({ extended: true }));
 // set up the route as delete or put
 app.use(methodOverride('_method'));
+// use the public folder to serve the static files
+app.use(express.static(path.join(__dirname, 'public')));
 
-const validateDestination = (req, res, next) => {
-  const { error } = destinationSchema.validate(req.body);
-  if (error) {
-    const msg = result.error.details.map(el => el.message).join(',')
-    throw new ExpressError(msg, 400)
-  } else {
-    next();
-  }
-}
 
-const validateComment = (req, res, next) => {
-  const { error } = commentSchema.validate(req.body);
-  if (error) {
-    const msg = result.error.details.map(el => el.message).join(',')
-    throw new ExpressError(msg, 400)
-  } else {
-    next();
+const sessionConfig = {
+  secret: "thisisasecret",
+  resave: false,
+  saveUninitialized: true,
+  cookie: {
+    httpOnly: true,
+    expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
+    maxAge: 1000 * 60 * 60 * 24 * 7
   }
-}
+} 
+  
+  
+app.use(session(sessionConfig))
+app.use(flash());
+// use passport
+app.use(passport.initialize());
+app.use(passport.session());
+// use static authenticate method of model in LocalStrategy
+passport.use(new LocalStrategy(User.authenticate()));
+
+// use static serialize and deserialize of model for passport session support
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+
+// define a middleware to use the flash message
+app.use((req, res, next) => {
+  // res.locals is an object that will be passed to the template
+  res.locals.success = req.flash('success'),
+  res.locals.error = req.flash('error')
+  next();
+})
+
+
+// define the prefix for the routes
+app.use('/destinations', destinationsRoutes);
+app.use('/destinations/:id/comments', commentsRoutes);
+app.use('/', userRoutes);
 
 
 app.get('/', (req, res) => {
   res.send("Hello World")
 })
 
-app.get('/destinations', catchAsync(async (req, res) => {
-  const destinations = await Destination.find({})
-  res.render('destinations/index', { destinations })
-}));
-
-app.get('/destinations/new', (req, res) => {
-  res.render('destinations/new')
-});
 
 
-app.post('/destinations', validateDestination, catchAsync(async (req, res) => {
-  const destination = new Destination(req.body.destination);
-  await destination.save();
-  res.redirect(`/destinations/${destination._id}`);
-}));
-
-app.get('/destinations/:id', catchAsync(async (req, res) => {
-  const destination = await Destination.findById(req.params.id).populate('comments');
-  res.render('destinations/show', { destination });
-}));
-
-
-app.get('/destinations/:id/edit', catchAsync(async (req, res) => {
-  const destination = await Destination.findById(req.params.id);
-  res.render('destinations/edit', { destination })
-}));
-
-app.put('/destinations/:id', catchAsync(async (req, res) => {
-  const { id } = req.params;
-  await Destination.findByIdAndUpdate(id, { ...req.body.destination });
-  res.redirect(`/destinations/${id}`)
-}));
-
-app.delete('/destinations/:id', catchAsync(async (req, res) => {
-  const { id } = req.params;
-  await Destination.findByIdAndDelete(id);
-  res.redirect('/destinations')
-}));
-
-app.post('/destinations/:id/comments', validateComment, catchAsync(async (req, res) => {
-  const destination = await Destination.findById(req.params.id);
-  const comment = new Comment(req.body.comment);
-  destination.comments.push(comment);
-  await comment.save();
-  await destination.save();
-  res.redirect(`/destinations/${destination._id}`);
-}));
-
-app.delete('/destinations/:id/comments/:commentId', catchAsync(async (req, res) => {
-  const { id, commentId } = req.params;
-  await Destination.findByIdAndUpdate(id, { $pull: { comments: commentId } });
-  await Comment.findByIdAndDelete(commentId);
-  res.redirect(`/destinations/${id}`);
-}));
 
 // define a middleware to handle all the request that not match the route above
 app.all('*', (req, res, next) => {

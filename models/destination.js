@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+// Import the Comment model
+const Comment = require('./comment');
 
 const DestinationSchema = new Schema({
   title: String,
