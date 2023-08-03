@@ -20,10 +20,12 @@ const sample = (array) => array[Math.floor(Math.random() * array.length)];
 
 const seedDB = async() =>{
   await Destination.deleteMany({});
-  for (let i=0; i<50; i++) {
+  for (let i = 0; i < 50; i++) {
+    author: "64cac9553381f58875baae8d";
     const random100 = Math.floor(Math.random() * nzcities.length);
     const date = '2023-07-01';
     const destination = new Destination({
+      author: "64cac9553381f58875baae8d",
       location: `${nzcities[random100].city}, ${nzcities[random100].region}`,
       title: `${sample(location_descriptors)} ${sample(places)}`,
       image: 'https://images.unsplash.com/photo-1626606076701-cf4ae64b2b03?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80',

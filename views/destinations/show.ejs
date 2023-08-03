@@ -34,9 +34,13 @@
             <%= destination.description%>
           </p>
         </div>
+
         <ul class="list-group list-group-flush">
           <li class="list-group-item text-muted">
             <%= destination.location%>
+          </li>
+          <li class="list-group-item">
+            Shared by <%= destination.author.username%>
           </li>
 
           <li class="list-group-item">
@@ -44,70 +48,81 @@
           </li>
         </ul>
 
-        <div class="card-body">
-          <a class="card-link btn btn-info" href="/destinations/<%=destination._id%>/edit">Edit</a>
-          <form class="d-inline" action="/destinations/<%=destination._id%>?_method=DELETE" method="POST">
-            <button class="btn btn-danger">Delete</button>
-          </form>
-        </div>
-        <div class="card-footer text-muted">
-          <%= destination.date%>
-        </div>
+        <% if(currentUser && destination.author.equals(currentUser._id)) { %>
+          <div class="card-body">
+            <a class="card-link btn btn-info" href="/destinations/<%=destination._id%>/edit">Edit</a>
+            <form class="d-inline" action="/destinations/<%=destination._id%>?_method=DELETE" method="POST">
+              <button class="btn btn-danger">Delete</button>
+            </form>
+          </div>
+          <% } %>
+            <div class="card-footer text-muted">
+              <%= destination.date%>
+            </div>
       </div>
     </div>
 
     <div class="col-6">
-      <h2>Rate your experience:</h2>
-      <form action="/destinations/<%=destination._id %>/comments" method="post" class="mb-3 validated-form" novalidate>
-        <div class="mb-3">
-          <fieldset class="starability-basic">
-            <legend></legend>
-            <input type="radio" id="no-rate" class="input-no-rate" name="comment[rating]" value="1" checked
-              aria-label="No rating." />
-            <input type="radio" id="first-rate1" name="comment[rating]" value="1" />
-            <label for="first-rate1" title="Terrible">1 star</label>
-            <input type="radio" id="first-rate2" name="comment[rating]" value="2" />
-            <label for="first-rate2" title="Not good">2 stars</label>
-            <input type="radio" id="first-rate3" name="comment[rating]" value="3" />
-            <label for="first-rate3" title="Average">3 stars</label>
-            <input type="radio" id="first-rate4" name="comment[rating]" value="4" />
-            <label for="first-rate4" title="Very good">4 stars</label>
-            <input type="radio" id="first-rate5" name="comment[rating]" value="5" />
-            <label for="first-rate5" title="Amazing">5 stars</label>
-          </fieldset>
-        </div>
-
-        <div class="mb-3">
-          <label class="form-label" for="commentbody">Comment Text:</label>
-          <textarea class="form-control" name="comment[body]" id="commentbody" cols="30" rows="3" required></textarea>
-          <div class="valid-feedback">
-            Looks good!
+      <% if(currentUser) { %>
+        <h2>Rate your experience:</h2>
+        <form action="/destinations/<%=destination._id %>/comments" method="post" class="mb-3 validated-form"
+          novalidate>
+          <div class="mb-3">
+            <fieldset class="starability-basic">
+              <legend></legend>
+              <input type="radio" id="no-rate" class="input-no-rate" name="comment[rating]" value="1" checked
+                aria-label="No rating." />
+              <input type="radio" id="first-rate1" name="comment[rating]" value="1" />
+              <label for="first-rate1" title="Terrible">1 star</label>
+              <input type="radio" id="first-rate2" name="comment[rating]" value="2" />
+              <label for="first-rate2" title="Not good">2 stars</label>
+              <input type="radio" id="first-rate3" name="comment[rating]" value="3" />
+              <label for="first-rate3" title="Average">3 stars</label>
+              <input type="radio" id="first-rate4" name="comment[rating]" value="4" />
+              <label for="first-rate4" title="Very good">4 stars</label>
+              <input type="radio" id="first-rate5" name="comment[rating]" value="5" />
+              <label for="first-rate5" title="Amazing">5 stars</label>
+            </fieldset>
           </div>
-        </div>
-        <button class="btn btn-success">Submit</button>
-      </form>
 
-
-
-      <% for(let comment of destination.comments ){ %>
-        <div class="card mb-3">
-          <div class="card-body">
-            <h5 class="card-title">
-              Rating:
-            </h5>
-            <p class="starability-result" data-rating="<%= comment.rating %>">
-              Rated: <%= comment.rating %> stars
-            </p>
-
-            <p class="card-text">
-              comment: <%= comment.body %>
-            </p>
-            <form action="/destinations/<%=destination._id %>/comments/<%=comment._id %>?_method=delete" method="POST">
-              <button type="submit" class="btn btn-sm btn-danger">Delete</button>
-            </form>
+          <div class="mb-3">
+            <label class="form-label" for="commentbody">Comment Text:</label>
+            <textarea class="form-control" name="comment[body]" id="commentbody" cols="30" rows="3" required></textarea>
+            <div class="valid-feedback">
+              Looks good!
+            </div>
           </div>
-        </div>
+          <button class="btn btn-success">Submit</button>
+        </form>
         <% } %>
+
+
+
+          <% for(let comment of destination.comments ){ %>
+            <div class="card mb-3">
+              <div class="card-body">
+                <h5 class="card-title">
+                  Rating:
+                </h5>
+                <p class="starability-result" data-rating="<%= comment.rating %>">
+                  Rated: <%= comment.rating %> stars
+                </p>
+                <p class="card-subtitle mb-2 text-muted">
+                  Shared by <%= comment.author.username %>
+                </p>
+
+                <p class="card-text">
+                  comment: <%= comment.body %>
+                </p>
+                <% if(currentUser && destination.author.equals(currentUser._id)) { %>
+                  <form action="/destinations/<%=destination._id %>/comments/<%=comment._id %>?_method=delete"
+                    method="POST">
+                    <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                  </form>
+                  <% } %>
+              </div>
+            </div>
+            <% } %>
     </div>
 
   </div>
