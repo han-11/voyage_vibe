@@ -13,6 +13,7 @@ ImageSchema.virtual('thumbnail').get(function(){
   return this.url.replace('/upload', '/upload/w_200');
 })
 
+// Add a virtual property to the ImageSchema
 const opt = { toJSON: { virtuals: true}};
 
 const DestinationSchema = new Schema({
@@ -21,6 +22,17 @@ const DestinationSchema = new Schema({
   description: String,
   location: String,
   date: String,
+  geometry: {
+        type: {
+            type: String,
+            enum: ['Point'],
+            required: true
+        },
+        coordinates: {
+            type: [Number],
+            required: true
+        }
+    },
   author: {
     type: Schema.Types.ObjectId,
     ref: 'User'
@@ -31,6 +43,14 @@ const DestinationSchema = new Schema({
       ref: 'Comment'
     }
   ]
+}, opt);
+
+
+// Add a virtual property to the DestinationSchema
+DestinationSchema.virtual('properties.popUpMarkup').get(function () {
+    return `
+    <strong><a href="/destinations/${this._id}">${this.title}</a><strong>
+    <p>${this.description.substring(0, 20)}...</p>`
 });
 
 

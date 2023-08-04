@@ -25,11 +25,27 @@ const seedDB = async() =>{
     const random100 = Math.floor(Math.random() * nzcities.length);
     const date = '2023-07-01';
     const destination = new Destination({
+      // Hard coded author id
       author: "64cac9553381f58875baae8d",
       location: `${nzcities[random100].city}, ${nzcities[random100].region}`,
       title: `${sample(location_descriptors)} ${sample(places)}`,
-      image: 'https://images.unsplash.com/photo-1626606076701-cf4ae64b2b03?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80',
+        geometry: {
+                type: "Point",
+                coordinates: [ nzcities[random100].lng,
+                    nzcities[random100].lat]
+            },
+      images: [
+                {
+                    url: 'https://res.cloudinary.com/deg98levx/image/upload/v1691105537/VoyageVibe/geqfvaihj3blxqgfa67n.jpg',
+                    filename: 'YelpCamp/ahfnenvca4tha00h2ubt'
+                },
+                {
+                    url: 'https://res.cloudinary.com/deg98levx/image/upload/v1691105273/VoyageVibe/cinejnnvsolsxqbd9xw8.jpg',
+                    filename: 'YelpCamp/ruyoaxgf72nzpi4y6cdi'
+                }
+            ],
       date,
+
       description: "Unleash Your Wanderlust: destination Beyond Boundaries with Voyage Vibe!",
       
     })

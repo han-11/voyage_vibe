@@ -13,7 +13,8 @@ const {isLoggedIn, validateDestination, isAuthor } = require('../middleware.js')
 router.route('/')
   .get(catchAsync(destinations.index))
   .post(isLoggedIn,
-    validateDestination,
+    upload.array('image'), 
+     validateDestination,
     catchAsync(destinations.createDestination))
 
 router.get('/new', isLoggedIn, destinations.renderNewForm);
@@ -21,7 +22,8 @@ router.get('/new', isLoggedIn, destinations.renderNewForm);
 router.route('/:id')
     .get( catchAsync(destinations.showDestination))
     .put(isLoggedIn,
-    isAuthor,
+      isAuthor,
+    upload.array('image'), 
     validateDestination,
     catchAsync(destinations.updateDestination))
     .delete(isLoggedIn,

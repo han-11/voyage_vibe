@@ -6,8 +6,10 @@ module.exports.destinationSchema = Joi.object({
       location: Joi.string().required(),
       title: Joi.string().required(),
       date: Joi.date().required(),
-      description: Joi.string().required()
-    }).required()
+      description: Joi.string().required(),
+      // image: Joi.string().required()
+    }).required(),
+  deleteImages: Joi.array()
   });
 
   
