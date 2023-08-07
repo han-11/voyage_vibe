@@ -1,6 +1,8 @@
 mapboxgl.accessToken = mapToken;
 
 
+
+
 const map = new mapboxgl.Map({
 container: 'cluster-map',
 // Choose from Mapbox's core styles, or make your own style with Mapbox Studio
@@ -23,7 +25,7 @@ map.addSource('destinations', {
 type: 'geojson',
 // Point to GeoJSON data. This example visualizes all M1.0+ earthquakes
 // from 12/22/15 to 1/21/16 as logged by USGS' Earthquake hazards program.
-data: destinations,
+  data: destinations,
 cluster: true,
 clusterMaxZoom: 14, // Max zoom to cluster points on
 clusterRadius: 50 // Radius of each cluster when clustering points (defaults to 50)
@@ -111,8 +113,9 @@ zoom: zoom
 // the location of the feature, with
 // description HTML from its properties.
   map.on('click', 'unclustered-point', (e) => {
-  console.log(e.features[0])
+
     const coordinates = e.features[0].geometry.coordinates.slice();
+
     // get the destination's details from the popup markup, from the virtual property  created in the model
     const { popUpMarkup } = e.features[0].properties;
  

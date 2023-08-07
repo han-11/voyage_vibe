@@ -5,10 +5,82 @@ const geocoder = mbxGeocoding({ accessToken:mapBoxToken });
 const { cloudinary } = require("../cloudinary");
 
 
-module.exports.index = async (req, res) => {
-  const destinations = await Destination.find({})
-  res.render('destinations/index', { destinations })
+
+//=======================
+// ROUTES
+//=======================
+
+// For Fuzzy Search
+function escapeRegex(text) {
+    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
 }
+
+// INDEX ROUTE
+// This is how we see the data
+
+module.exports.index = async (req, res) => {
+    let perPage = 10;
+    let pageQuery = parseInt(req.query.page);
+    let pageNumber = pageQuery ? pageQuery : 1;
+    let noMatch = null;
+    let allDestinations;
+  
+  if (req.query.search) {
+      
+    const regex = new RegExp(escapeRegex(req.query.search), 'gi');
+    try {
+            const allDestinations = await Destination.find({ title: regex })
+              .skip((perPage * pageNumber) - perPage)
+              .limit(perPage)
+              .exec();
+
+            const count = await Destination.countDocuments({ title: regex });
+
+            if (allDestinations.length < 1) {
+              noMatch = "No destinations match that query, please try again.";
+            }
+
+            res.render("destinations/index", {
+              destinations: allDestinations,
+              current: pageNumber,
+              pages: Math.ceil(count / perPage),
+              noMatch: noMatch,
+              search: req.query.search,
+              result: `Searched results for "${req.query.search}"`
+            });
+      } catch (err) {
+              req.flash("error", "Sorry, something unexpected went wrong. Please let me know by sending an email to jacob.d.grisham@gmail.com");
+              res.redirect("/destinations"); // or handle the error appropriately
+    } 
+    
+  } else {
+    
+      try {
+            allDestinations = await Destination.find({})
+              .skip((perPage * pageNumber) - perPage)
+              .limit(perPage)
+              .exec();
+          // count how many destinations are in the database
+              const count = await Destination.countDocuments();
+
+              res.render("destinations/index", {
+                destinations: allDestinations,
+                current: pageNumber,
+                pages: Math.ceil(count / perPage),
+                noMatch: noMatch,
+                search: false, 
+                result: 'All Destinations',
+                allDestinations: allDestinations
+              });
+      } catch (err) {
+        console.log(err);
+        // Handle the error appropriately
+      }
+  }
+};
+
+      
+
 
 module.exports.renderNewForm = (req, res) => {
   if (!req.isAuthenticated()) {
@@ -28,7 +100,6 @@ module.exports.createDestination = async (req, res) => {
   destination.images = req.files.map( f => ({ url: f.path, filename:f.filename }));
   destination.author = req.user._id;
   await destination.save();
-  console.log(destination);
   req.flash('success', 'Successfully shared your destination!');
   res.redirect(`/destinations/${destination._id}`);
 }
@@ -40,8 +111,6 @@ module.exports.showDestination = async (req, res) => {
       path: 'author'
     }
 }).populate('author');
-  console.log(destination);
-  console.log(destination.geometry.coordinates);
   if (!destination) {
     req.flash('error', 'Cannot find that destination!');
     return res.redirect('/destinations');
