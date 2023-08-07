@@ -6,10 +6,10 @@ mapboxgl.accessToken = mapToken;
 const map = new mapboxgl.Map({
 container: 'cluster-map',
 // Choose from Mapbox's core styles, or make your own style with Mapbox Studio
-  style: 'mapbox://styles/mapbox/light-v11',
+  style: 'mapbox://styles/mapbox/dark-v11',
 // center the map on the wellington region
 center: [174.772996908, -41.28666552 ],
-zoom:5
+zoom:4
 });
 
 
@@ -43,23 +43,23 @@ paint: {
 //   * Yellow, 30px circles when point count is between 100 and 750
 //   * Pink, 40px circles when point count is greater than or equal to 750
 'circle-color': [
-'step',
-['get', 'point_count'],
-'#4DD0E1',
-10,
-'#1E88E5',
-30,
-'#9575CD'
-],
-'circle-radius': [
-'step',
-['get', 'point_count'],
-15,
-10,
-20,
-30,
-25
-]
+            'step',
+            ['get', 'point_count'],
+            '#ffaec0', // pink
+            5,
+            '#ffab73', // orange
+            10,
+            '#cdc733' // yellow green
+            ],
+            'circle-radius': [
+            'step',
+            ['get', 'point_count'],
+            20,
+            100,
+            30,
+            750,
+            40
+        ]
 }
 });
  
