@@ -20,9 +20,7 @@ function escapeRegex(text) {
 module.exports.index = async (req, res, next) => {
     let noMatch = null;
     let currentPage = Number(req.query.page);
-    console.log({
-        currentPage
-    });
+  let results = 'All Destinations ';
 
     if (!currentPage || currentPage < 1)
     // if client req /index w/o ?page 
@@ -37,14 +35,12 @@ module.exports.index = async (req, res, next) => {
           if (req.session.destinations.length < 1) {
               noMatch = "No destinations match that query, please try again.";
             }
-          
         } catch (err) {
           req.flash("error", "Sorry, something unexpected went wrong. Please let me know by sending an email to jacob.d.grisham@gmail.com");
          res.redirect("/destinations"); // or handle the error appropriately
         
         }
       } else {
-      
     //     const regex = new RegExp(escapeRegex(req.query.search), 'gi');
         req.session.destinations = await Destination.find({}).limit(1000);
       }
@@ -77,98 +73,10 @@ module.exports.index = async (req, res, next) => {
       start,
       end,
       noMatch,
-      results: req.query.search ? `All Destinations` : `Search results for "${req.query.search}"`
+      results: req.query.search ?  `Search results for "${req.query.search}"`  : results
       });
 };
-
-module.exports.search = async (req, res) => {
-    const searchTerm = req.query.q ? (req.query.q).match(/\w+/g).join(' ') : "";
-    console.log(searchTerm);
-
-    const destinations = shuffle(await Destination.find({
-        $text: {
-            $search: searchTerm
-        }
-    }));
-
-    res.render('destinations/search', {
-        searchTerm,
-        destinations
-    });
-};
-
-
-
-
-
-
-
-
-
-// ===========
-
-// module.exports.index = async (req, res) => {
-//     let perPage = 10;
-//     let pageQuery = parseInt(req.query.page);
-//     let pageNumber = pageQuery ? pageQuery : 1;
-//     let noMatch = null;
-//     let allDestinations;
-  
-//   if (req.query.search) {
-      
-//     const regex = new RegExp(escapeRegex(req.query.search), 'gi');
-//     try {
-//             const allDestinations = await Destination.find({ title: regex })
-//               .skip((perPage * pageNumber) - perPage)
-//               .limit(perPage)
-//               .exec();
-
-//             const count = await Destination.countDocuments({ title: regex });
-
-//             if (allDestinations.length < 1) {
-//               noMatch = "No destinations match that query, please try again.";
-//             }
-
-//             res.render("destinations/index", {
-//               destinations: allDestinations,
-//               current: pageNumber,
-//               pages: Math.ceil(count / perPage),
-//               noMatch: noMatch,
-//               search: req.query.search,
-//               result: `Searched results for "${req.query.search}"`
-//             });
-//       } catch (err) {
-//               req.flash("error", "Sorry, something unexpected went wrong. Please let me know by sending an email to jacob.d.grisham@gmail.com");
-//               res.redirect("/destinations"); // or handle the error appropriately
-//     } 
-    
-//   } else {
-    
-//       try {
-//             allDestinations = await Destination.find({})
-//               .skip((perPage * pageNumber) - perPage)
-//               .limit(perPage)
-//               .exec();
-//           // count how many destinations are in the database
-//               const count = await Destination.countDocuments();
-
-//               res.render("destinations/index", {
-//                 destinations: allDestinations,
-//                 current: pageNumber,
-//                 pages: Math.ceil(count / perPage),
-//                 noMatch: noMatch,
-//                 search: false, 
-//                 result: 'All Destinations',
-//                 allDestinations: allDestinations
-//               });
-//       } catch (err) {
-//         console.log(err);
-//         // Handle the error appropriately
-//       }
-//   }
-// };
-
-      
+   
 
 
 module.exports.renderNewForm = (req, res) => {

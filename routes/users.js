@@ -17,7 +17,9 @@ router.route('/login')
     .get(users.renderLogin)
     .post(storeReturnTo,
     // passport.authenticate logs the user in and clears req.session
-    passport.authenticate('local', {failureFlash: true, failureRedirect: '/login'}),
+        passport.authenticate('local', {
+            failureFlash: true, failureRedirect: '/login'
+        }),
     // Now  use res.locals.returnTo to redirect the user after login
     users.loginUser
     );

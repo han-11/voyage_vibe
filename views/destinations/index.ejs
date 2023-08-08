@@ -1,28 +1,22 @@
 <%- layout('layouts/boilerplate') %>
 
-<% if (currentPage === 1) { %>
+<% if (currentPage === 1 ) { %>
     <div id="cluster-map-space"></div>
     <div id="cluster-map"></div>
 <% } %>
 
 
-
+<!-- 
  <form action="/destinations" method="GET" class="form-inline" id="destination-search">
       <div class="form-group">
         <input type="text" name="search" placeholder="Destination search..." class="form-control mt-3"> 
         <input type="Submit" value="Search" class="btn btn-sm btn-dark mt-1">
       </div>
-  </form>
-
-
+  </form> -->
 
 
 <div class="text-center">
-    <% if (results === 'Search results for "undefined"'){ %>
-      <h1>All Destinations</h1>
-    <% } else {%>
       <h1><%= results %></h1>
-    <% } %>
   <p>
     <% if (currentPage != 1) { %>
         <a href="/destinations?page=1">Go to Map</a> | 

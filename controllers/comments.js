@@ -6,6 +6,7 @@ module.exports.createComment = async (req, res) => {
   const destination = await Destination.findById(req.params.id);
   const comment = new Comment(req.body.comment);
   comment.author = req.user._id;
+  comment.lastUpdated = Date.now();
   destination.comments.push(comment);
   await comment.save();
   await destination.save();

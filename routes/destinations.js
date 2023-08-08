@@ -19,7 +19,6 @@ router.route('/')
 
 router.get('/new', isLoggedIn, destinations.renderNewForm);
 
-router.get('/search', catchAsync( destinations.search ));
 
 router.route('/:id')
     .get( catchAsync(destinations.showDestination))

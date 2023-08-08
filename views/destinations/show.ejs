@@ -38,22 +38,20 @@
           <h5 class="card-title">
             <%= destination.title%>
           </h5>
-          <p class="card-text">
-            <%= destination.description%>
-          </p>
+          <p class="card-text text-success"> <i class="bi bi-pin-map-fill"></i>  <%= destination.date%></p>
+        
         </div>
 
         <ul class="list-group list-group-flush">
           <li class="list-group-item text-muted">
+          <i class="bi bi-geo-alt-fill"></i>
             <%= destination.location%>
           </li>
           <li class="list-group-item">
-            Shared by <%= destination.author.username%>
+            <%= destination.description%>
           </li>
 
-          <li class="list-group-item">
-            <%= destination.date%>
-          </li>
+        
         </ul>
 
         <% if(currentUser && destination.author.equals(currentUser._id)) { %>
@@ -65,7 +63,7 @@
           </div>
           <% } %>
             <div class="card-footer text-muted">
-              <%= destination.date%>
+              Shared by <%= destination.author.username%> 
             </div>
       </div>
     </div>
@@ -114,25 +112,27 @@
           <% for(let comment of destination.comments ){ %>
             <div class="card mb-3">
               <div class="card-body">
-                <h5 class="card-title">
-                  Rating:
-                </h5>
+               <div class="d-flex justify-content-between">
                 <p class="starability-result" data-rating="<%= comment.rating %>">
                   Rated: <%= comment.rating %> stars
                 </p>
-                <p class="card-subtitle mb-2 text-muted">
-                  Shared by <%= comment.author.username %>
-                </p>
 
-                <p class="card-text">
-                  comment: <%= comment.body %>
-                </p>
-                <% if(currentUser && destination.author.equals(currentUser._id)) { %>
+                 <% if(currentUser && destination.author.equals(currentUser._id)) { %>
                   <form action="/destinations/<%=destination._id %>/comments/<%=comment._id %>?_method=delete"
                     method="POST">
-                    <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                    <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
                   </form>
                   <% } %>
+                </div>
+                <p class="card-text">
+                  <b>&ldquo;</b> <%= comment.body %> <b>&ldquo;</b>
+                </p>
+              
+
+                <p class="card-text text-success text-end">
+                    <i class="bi bi-pencil"></i> <%= comment.author.username  %> 
+                    <span class="text-muted"> &vert; <%= comment.lastUpdatedString  %> </span>
+                </p>
               </div>
             </div>
             <% } %>
