@@ -1,8 +1,8 @@
 body {
   height: 100vh;
-  background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
-  url("https://images.unsplash.com/photo-1600466403153-50193d187dde?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2748&q=80");
-  /* url('https://images.unsplash.com/photo-1557589747-a830b99db298?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2507&q=80'); */
+  /* background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
+  url("https://images.unsplash.com/photo-1600466403153-50193d187dde?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2748&q=80"); */
+
   background-size: cover;
   background-position: center;
   text-shadow: 0 0.05rem 0.1rem rgba(0,0,0,0.5);

@@ -1,0 +1,467 @@
+/* -------------------------------------------------------- */
+/* Base */
+/* -------------------------------------------------------- */
+/* Inputs */
+:root {
+  --input-padding-x: .75rem;
+  --input-padding-y: .5rem;
+}
+
+/* Fonts */
+.logo {
+	font-family: 'Pacifico', cursive;
+}
+
+.logo-lg {
+	font-family: 'Pacifico', cursive;
+	font-size: 5rem;
+	background: -webkit-linear-gradient(#fdbb2d 0%,
+		#c32293 );
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+}
+
+.logo-md {
+	font-family: 'Pacifico', cursive;
+	font-size: 3rem;
+}
+
+.title-font {
+	font-family: 'Sriracha', cursive;
+}
+
+.body-font {
+	font-family: 'Montserrat', sans-serif;
+}
+
+/* Colors */
+
+.opaque-background {
+	background: linear-gradient(80deg, rgba(255,255,255,.9), rgba(255,255,255,0.3));
+	border-radius: 10px;
+}
+
+.wood {
+	background-image: url("../images/button-square.svg");
+	background-size: auto;
+	background-repeat: repeat;
+}
+
+.light-brown {
+	background-color: #AC7D35;
+}
+
+.dark-brown {
+	background-color: #6E4821;
+}
+
+/* Background */
+.site {
+	display: flex;
+	min-height: 100vh;
+	flex-direction: column;
+	background-color: rgb(208, 236, 253);
+	overflow-x: hidden;
+}
+
+.nighttime {
+	background-color: rgb(2,17,41);
+}
+
+
+.cloud {
+	animation: cloud-movement infinite linear;
+	position: fixed;
+	transform: translateX(-50%) translateY(-50%);
+}
+
+.cloud-1 {
+	width: 50rem;
+	top: 2%;
+	animation-duration: 200s;
+}
+
+.cloud-2 {
+	width: 30rem;
+	top: 9%;
+	animation-duration: 120s;
+}
+
+.cloud-3 {
+	width: 25rem;
+	top: 15%;
+	animation-duration: 60s;
+}
+
+@keyframes cloud-movement {
+	0% {
+    left: -10%;
+  }
+ 
+  100% {
+    left: 120%;
+  }
+}
+
+/* -------------------------------------------------------- */
+/* Navbar */
+/* -------------------------------------------------------- */
+/* Bringing the navbar to the very top to avoid fade effect on it */
+/* .navbar {
+	z-index: 3;
+} */
+
+.navbar-nav {
+	justify-content: flex-end;
+}
+
+.nav-item {
+	margin: 15px 0;
+}
+
+.camp {
+	width: 50px;
+	height: auto;
+}
+
+.night-color { 
+	color: rgb(2,17,41);
+}
+
+.day-color {
+	color: rgb(208, 236, 253);
+}
+
+.wood-arrow {
+	z-index: -1;
+	width: 7.5rem;
+	position: absolute;
+	filter: drop-shadow(4px 4px 3px #000);
+}
+
+.flip-horizontally {
+  transform: scaleX(-1);
+}
+
+.navbar-toggler {
+	z-index: 10;
+}
+
+.wiggle:hover{
+  animation: wiggle 1s infinite;
+  animation-timing-function: ease-in-out; 
+}
+
+.point:hover {
+	animation: point 2s infinite alternate-reverse;
+}
+
+@keyframes wiggle {
+  0% { transform: rotate(3deg); }
+  50% { transform: rotate(-3deg); }
+  100% { transform: rotate(3deg); }
+}
+
+@keyframes point {
+	0% { transform: translateX(-5px); }
+  50% { transform: translateX(0); }
+	100% { transform: translateX(5px); }
+}
+
+/* -------------------------------------------------------- */
+/* Landing */
+/* -------------------------------------------------------- */
+
+
+
+#scene {
+	position: fixed;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	text-align: center;
+}
+
+#scene > img {
+	width: auto;
+	height: 110vh;
+}
+
+.landing-header {
+	z-index: 1;
+	text-align: center;
+	margin-top: 3rem;
+	color: white;
+	position: absolute;
+	text-align: center;
+	margin: 0 auto;
+	top: 20%;
+	left: 50%;
+	transform: translateX(-50%) translateY(-50%);
+	animation: fade-in 1.5s ease-out;
+}
+
+.cloud_layer{
+	width: 50rem;
+height: auto;
+}
+
+@keyframes fade-in {
+	from {
+		opacity: 0;
+		transform: scale(0.5);
+	}
+	to {
+		opacity: 1;
+		transform: scale(1);
+	}
+}
+
+.landing-header div {
+	z-index: 2;
+	position: absolute;
+}
+
+.landing-svg {
+	position: absolute;
+	top: 20%;
+}
+
+.bounce:hover i {
+	animation: bounce 1s infinite;
+}
+
+@keyframes bounce {
+	0% {
+		transform: translateX(0%);
+	}
+
+	12% {
+		transform: translateX(10.89%);
+	}
+
+	24% {
+		transform: translateX(43.56%);
+	}
+
+	36% {
+		transform: translateX(108.01%);
+	}
+
+	54% {
+		transform: translateX(75.02%);
+	}
+
+	74% {
+		transform: translateX(108.37%);
+	}
+
+	82% {
+		transform: translateX(103.75%);
+	}
+
+	92% {
+		transform: translateX(109.34%);
+	}
+
+	96% {
+		transform: translateX(108.46%);
+	}
+
+	100% {
+		transform: translateX(109%);
+	}
+
+}
+
+/* -------------------------------------------------------- */
+/* Buttons */
+/* -------------------------------------------------------- */
+.show-btn {
+	width: 100%;
+}
+
+.wood-background-btn {
+	background-image: url("../images/button-square.svg");
+	background-size: cover;
+}
+
+.wood-btn {
+	position: relative;
+}
+
+/* Coloring plus icon white */
+.add {
+	color: white;
+}
+
+/* -------------------------------------------------------- */
+/* Reviews */
+/* -------------------------------------------------------- */
+/* Coloring the review stars yellow  */
+.checked {
+    color: yellow;
+}
+/* Hiding review stars to prevent empty/black starts from showing */
+.transparent {
+	display: none;
+}
+
+/* -------------------------------------------------------- */
+/* Campground Index Page */
+/* -------------------------------------------------------- */
+
+.park-sign-svg {
+	background-image: url("../images/landing.svg");
+	background-size: contain;
+	background-repeat: no-repeat;
+	z-index: 1;	
+}
+
+@media only screen and (max-width: 600px) {
+  .park-sign-svg {
+    background-image: none;
+  }
+}
+
+.default-park-sign-size {
+	height: 20rem;
+	width: 25rem;
+}
+
+.park-sign-size-for-login-and-register {
+	height: 30rem;
+	width: 35rem;
+}
+
+/* Campground index page campground card positioning */
+#campground-container {
+	display: flex;
+	justify-content: space-around;
+}
+
+.photo-link {
+	overflow: hidden;
+}
+
+.photo-link img {
+	transition: transform .5s ease;
+}
+
+.photo-link:hover img {
+	transform: scale(1.25);
+}
+
+/* Google Maps */
+#map {
+	height: 500px;
+    width: 100%;
+}
+
+/* -------------------------------------------------------- */
+/* Forms */
+/* -------------------------------------------------------- */
+.new-edit-forms {
+	margin: 5rem auto;
+	padding: 2rem;
+}
+
+.form-label-group {
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.form-label-group > input,
+.form-label-group > label {
+  padding: var(--input-padding-y) var(--input-padding-x);
+}
+
+.form-label-group > label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 100%;
+  margin-bottom: 0;
+  /* Override default `<label>` margin */
+  line-height: 1.5;
+  color: #495057;
+  border: 1px solid transparent;
+  border-radius: .25rem;
+  transition: all .1s ease-in-out;
+}
+
+.form-label-group input::-webkit-input-placeholder {
+  color: transparent;
+}
+
+.form-label-group input:-ms-input-placeholder {
+  color: transparent;
+}
+
+.form-label-group input::-ms-input-placeholder {
+  color: transparent;
+}
+
+.form-label-group input::-moz-placeholder {
+  color: transparent;
+}
+
+.form-label-group input::placeholder {
+  color: transparent;
+}
+
+.form-label-group input:not(:placeholder-shown) {
+  padding-top: calc(var(--input-padding-y) + var(--input-padding-y) * (2 / 3));
+  padding-bottom: calc(var(--input-padding-y) / 3);
+}
+
+.form-label-group input:not(:placeholder-shown) ~ label {
+  padding-top: calc(var(--input-padding-y) / 3);
+  padding-bottom: calc(var(--input-padding-y) / 3);
+  font-size: 12px;
+  color: #777;
+}
+
+/* -------------------------------------------------------- */
+/* Bootstrap template login properties */
+/* -------------------------------------------------------- */
+.login-container {
+  display: -ms-flexbox;
+  display: -webkit-box;
+  display: flex;
+  -ms-flex-align: center;
+  -ms-flex-pack: center;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
+.form-signin {
+  width: 100%;
+  max-width: 420px;
+  padding: 15px;
+  margin: 0 auto;
+}
+
+
+.signup-login {
+	margin: 5rem auto;
+}
+
+/* -------------------------------------------------------- */
+/* Footer */
+/* -------------------------------------------------------- */
+.footer {
+	font-size: .85rem;
+}
+
+.footer p svg {
+	height: 16px;
+  width: 20px;
+	vertical-align: top;
+}
