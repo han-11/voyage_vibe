@@ -309,7 +309,7 @@ height: auto;
 }
 
 /* -------------------------------------------------------- */
-/* Campground Index Page */
+/* Destination Index Page */
 /* -------------------------------------------------------- */
 
 .park-sign-svg {
@@ -335,8 +335,8 @@ height: auto;
 	width: 35rem;
 }
 
-/* Campground index page campground card positioning */
-#campground-container {
+/* Destination index page Destination card positioning */
+#Destination-container {
 	display: flex;
 	justify-content: space-around;
 }

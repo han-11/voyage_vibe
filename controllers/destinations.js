@@ -48,7 +48,7 @@ module.exports.index = async (req, res, next) => {
         // Initialize Pagination
         let len = (req.session.destinations).length;
         req.session.pagination = {
-            totalItems: len, // total # of campgrounds
+            totalItems: len, // total # of Destinations
             itemsPerPage: 10,
             totalPages: Math.ceil(len / 10) // total # of pages
         }

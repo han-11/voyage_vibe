@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="jest tests" tests="12" failures="0" errors="0" time="0.728">
+  <testsuite name="User Model" errors="0" failures="0" skipped="0" timestamp="2023-10-19T01:27:31" time="0.697" tests="12">
+    <testcase classname="User Model should save a user to the database" name="User Model should save a user to the database" time="0.011">
+    </testcase>
+    <testcase classname="User Model should find a user by email" name="User Model should find a user by email" time="0.006">
+    </testcase>
+    <testcase classname="User Model should update a user email" name="User Model should update a user email" time="0.005">
+    </testcase>
+    <testcase classname="User Model should delete a user from the database" name="User Model should delete a user from the database" time="0.004">
+    </testcase>
+    <testcase classname="Comment Model should save a comment to the database" name="Comment Model should save a comment to the database" time="0.003">
+    </testcase>
+    <testcase classname="Comment Model should find a comment by body" name="Comment Model should find a comment by body" time="0.002">
+    </testcase>
+    <testcase classname="Comment Model should update a comment rating" name="Comment Model should update a comment rating" time="0.003">
+    </testcase>
+    <testcase classname="Comment Model should delete a comment from the database" name="Comment Model should delete a comment from the database" time="0.003">
+    </testcase>
+    <testcase classname="Destination Model should save a destination to the database" name="Destination Model should save a destination to the database" time="0.004">
+    </testcase>
+    <testcase classname="Destination Model should find a destination by title" name="Destination Model should find a destination by title" time="0.002">
+    </testcase>
+    <testcase classname="Destination Model should update a destination description" name="Destination Model should update a destination description" time="0.005">
+    </testcase>
+    <testcase classname="Destination Model should delete a destination from the database" name="Destination Model should delete a destination from the database" time="0.003">
+    </testcase>
+  </testsuite>
+</testsuites>
