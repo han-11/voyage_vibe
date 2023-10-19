@@ -31,8 +31,6 @@ Voyage Vibe is a website that allows users to create and review travel destinati
 - Search for destinations by name or location.
 - Sort destinations by highest rating, most reviewed, lowest price, or highest price.
 
-## Getting Started Locally
-
 ## 🚀 Getting Started
 ### To run this project on your system:
 Create an .env file and add values to the following variables:
