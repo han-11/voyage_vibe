@@ -61,26 +61,26 @@
 
 <section class="row d-flex justify-content-center">
 
- <div class="row g-0">
+<div class="row g-0" >
   <% for (let destination of destinations.slice(start, end)) { %>
-    <div class="col-md-6 ">
-      <div class="card destination-card g-0">
+    <div class="col-md-6" style="margin-bottom: 20px;" >
+      <div class="card destination-card g-0  h-100">
         <div class="row g-0">
           <div class="col-md-6 card-img-left destination-image">
             <% if (destination.images.length) { %>
               <img class="img-fluid" alt="destination-image" src="<%= destination.images[0].url %>" width="400" height="270">
             <% } else { %>
               <img class="img-fluid" alt="destination-image"
-                   src="https://res.cloudinary.com/deg98levx/image/upload/v1691106893/VoyageVibe/jxr8ljkvayafxtjn8esx.jpg"
-                   width="400" height="270">
+                src="https://res.cloudinary.com/deg98levx/image/upload/v1691106893/VoyageVibe/jxr8ljkvayafxtjn8esx.jpg"
+                width="400" height="270">
             <% } %>
           </div>
-          <div class="col-md-6">
-            <div class="card-body">
+          <div class="col-md-6 d-flex flex-column">
+            <div class="card-body d-flex flex-column">
               <h5 class="card-title">
                 <a href="/destinations/<%= destination._id %>"><%= destination.title %></a>
               </h5>
-              <p class="card-text">
+              <p class="card-text d-flex flex-grow-1">
                 <small>
                   <%= destination.description.substring(0, 100) %>...
                 </small>
