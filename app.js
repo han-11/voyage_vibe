@@ -1,7 +1,7 @@
 if (process.env.NODE_ENV !== "production") {
   require('dotenv').config();
 }
-
+// require the packages
 const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
@@ -87,7 +87,7 @@ app.use('/destinations', destinationsRoutes);
 app.use('/destinations/:id/comments', commentsRoutes);
 app.use('/', userRoutes);
 
-
+// define the route for the home page
 app.get('/', (req, res) => {
   res.render('landing')
 })

@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 // Import the Comment model
 const Comment = require('./comment');
 
-
+// define the schema for the images
 const ImageSchema = new Schema({
   url: String,
   filename: String

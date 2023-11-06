@@ -9,7 +9,7 @@ const {isLoggedIn, validateDestination, isAuthor } = require('../middleware.js')
 
 
 
-
+// define the route for the destinations, connect it to the controller, and validate the destination
 router.route('/')
   .get(catchAsync(destinations.index))
   .post(isLoggedIn,
@@ -31,7 +31,7 @@ router.route('/:id')
     isAuthor,
     catchAsync(destinations.deleteDestination));
 
-
+// define the route for the edit page
 router.get('/:id/edit', isLoggedIn, isAuthor, catchAsync(destinations.renderEditForm));
 
 

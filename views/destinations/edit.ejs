@@ -70,3 +70,14 @@
 
     </div>
   </div>
+
+
+<script src="https://maps.googleapis.com/maps/api/js?key=<%=process.env.GOOGLE_KEY%>&callback=Function.prototype&libraries=places">></script>
+<script>
+    function initialize() {
+        var input = document.getElementById('location');
+        var autocomplete = new google.maps.places.Autocomplete(input);
+    }
+addEventListener('load', initialize);
+
+</script>

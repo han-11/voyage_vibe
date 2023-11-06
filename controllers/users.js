@@ -1,5 +1,7 @@
 const User = require('../models/user');
 
+
+// users controller file to handle the user routes
 module.exports.renderRegister = (req, res) => {
   res.render('users/register');
 }

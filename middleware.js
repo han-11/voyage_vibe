@@ -14,6 +14,7 @@ const Comment = require('./models/comment.js');
   next();
  }
 
+
 //  return the user to the previous page that they  visited before login
  module.exports.storeReturnTo = (req, res, next) => {
   if (req.session.returnTo) {

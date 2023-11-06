@@ -6,22 +6,12 @@
 <% } %>
 
 
-<!-- 
- <form action="/destinations" method="GET" class="form-inline" id="destination-search">
-      <div class="form-group">
-        <input type="text" name="search" placeholder="Destination search..." class="form-control mt-3"> 
-        <input type="Submit" value="Search" class="btn btn-sm btn-dark mt-1">
-      </div>
-  </form> -->
-
 
 <div class="text-center">
       <h1><%= results %></h1>
-  <p>
     <% if (currentPage != 1) { %>
         <a href="/destinations?page=1">Go to Map</a> | 
     <% } %>
-    <a href="/destinations/new">Add a New Destination</a>
   </p>
 </div>
 

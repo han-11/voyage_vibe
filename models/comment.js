@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-
+// define the schema for the comments
 const commentSchema = new Schema({
   body: String,
   rating: Number,
@@ -14,7 +14,7 @@ const commentSchema = new Schema({
   },
 });
 
-
+// calculate the time difference between the current time and the last updated time
 commentSchema.virtual('lastUpdatedString').get(function() {
     const oneDay = 1000 * 60 * 60 * 24;
     const days = (Date.now() - this.lastUpdated) / oneDay;
@@ -26,5 +26,5 @@ commentSchema.virtual('lastUpdatedString').get(function() {
     return Math.floor(days) + ' ago';
 });
 
-
+// export the model so we can use it in other files
 module.exports = mongoose.model('Comment', commentSchema);

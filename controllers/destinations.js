@@ -10,7 +10,7 @@ const { cloudinary } = require("../cloudinary");
 // ROUTES
 //=======================
 
-// For Fuzzy Search
+// For Destinations Search
 function escapeRegex(text) {
     return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
 }
@@ -78,7 +78,7 @@ module.exports.index = async (req, res, next) => {
 };
    
 
-
+// render the new destination form
 module.exports.renderNewForm = (req, res) => {
   if (!req.isAuthenticated()) {
     req.flash('error', 'You must be signed in first!');
@@ -87,6 +87,8 @@ module.exports.renderNewForm = (req, res) => {
   res.render('destinations/new')
 }
 
+
+// create a new destination and save it to the database
 module.exports.createDestination = async (req, res) => {  
   const geoData = await geocoder.forwardGeocode({
     query: req.body.destination.location,
